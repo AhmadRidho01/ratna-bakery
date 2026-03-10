@@ -9,6 +9,9 @@ import cookieParser from "cookie-parser";
 import mongoSanitize from "express-mongo-sanitize";
 import rateLimit from "express-rate-limit";
 import { errorHandler } from "./middlewares/errorHandler";
+import authRoutes from "./routes/authRoutes";
+import productRoutes from "./routes/productRoutes";
+import orderRoutes from "./routes/orderRoutes";
 
 const app = express();
 
@@ -63,6 +66,17 @@ app.use("/api/auth", authLimiter);
 // Health check — untuk monitoring nanti
 app.get("/health", (req, res) => {
   res.json({ status: "OK", timestamp: new Date().toISOString() });
+});
+
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/orders", orderRoutes);
+
+// 404 handler
+app.use((req, res) => {
+  res
+    .status(404)
+    .json({ success: false, message: "Endpoint tidak ditemukan." });
 });
 
 // --- ---
