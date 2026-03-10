@@ -1,0 +1,17 @@
+node_modules/
+
+.env
+.env.local
+.env.production
+
+# Build output, Penting agar repositori kamu hanya berisi kode sumber asli, bukan file hasil generate mesin yang otomatis berubah setiap kali kamu menjalankan perintah build.
+dist/
+build/
+
+# OS files, Ini adalah file "sampah" dari sistem operasi (macOS/Windows).
+.DS_Store
+Thumbs.db
+
+# Logs, Sangat membantu agar riwayat commit kamu tidak dipenuhi oleh file teks berisi catatan error sementara yang tidak berguna bagi orang lain.
+*.log
+npm-debug.log*
