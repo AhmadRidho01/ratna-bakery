@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createOrder,
+  checkout,
   getOrderByCode,
   getAllOrders,
   updateOrderStatus,
@@ -11,6 +12,7 @@ const router = Router();
 
 // Public routes
 router.post("/", createOrder);
+router.post("/checkout", checkout);
 router.get("/track/:code", getOrderByCode);
 
 // Admin only routes
