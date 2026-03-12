@@ -14,6 +14,7 @@ import productRoutes from "./routes/productRoutes";
 import orderRoutes from "./routes/orderRoutes";
 
 const app = express();
+app.set("trust proxy", 1);
 
 // --- ---
 
