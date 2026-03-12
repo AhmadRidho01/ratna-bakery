@@ -206,3 +206,32 @@ export const checkout = catchAsync(async (req: Request, res: Response) => {
     201,
   );
 });
+
+// ADMIN ONLY — statistik dashboard
+export const getDashboardStats = catchAsync(
+  async (req: Request, res: Response) => {
+    const [totalProducts, totalOrders, pendingOrders, paidOrders] =
+      await Promise.all([
+        Product.countDocuments({ isAvailable: true }),
+        Order.countDocuments(),
+        Order.countDocuments({ status: "pending" }),
+        Order.find({ paymentStatus: "paid" }).select("grandTotal"),
+      ]);
+
+    const totalRevenue = paidOrders.reduce(
+      (sum, order) => sum + order.grandTotal,
+      0,
+    );
+
+    sendSuccess(
+      res,
+      {
+        totalProducts,
+        totalOrders,
+        pendingOrders,
+        totalRevenue,
+      },
+      "Dashboard stats berhasil diambil.",
+    );
+  },
+);

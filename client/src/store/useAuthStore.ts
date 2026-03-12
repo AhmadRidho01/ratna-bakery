@@ -48,6 +48,7 @@ const useAuthStore = create<AuthStore>((set) => ({
   },
 
   checkAuth: async () => {
+    set({ isLoading: true });
     try {
       const response = await api.get<{
         success: boolean;

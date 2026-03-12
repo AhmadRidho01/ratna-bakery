@@ -5,6 +5,8 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
+  uploadImage,
+  upload,
 } from "../controllers/productController";
 import { authenticate, authorizeAdmin } from "../middlewares/auth";
 
@@ -12,6 +14,13 @@ const router = Router();
 
 // Public routes
 router.get("/", getAllProducts);
+router.post(
+  "/upload-image",
+  authenticate,
+  authorizeAdmin,
+  upload.single("image"),
+  uploadImage,
+);
 router.get("/:slug", getProductBySlug);
 
 // Admin only routes
