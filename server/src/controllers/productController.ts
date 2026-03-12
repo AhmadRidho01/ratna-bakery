@@ -42,10 +42,11 @@ export const createProduct = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const updateProduct = catchAsync(async (req: Request, res: Response) => {
-  const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  const product = await Product.findByIdAndUpdate(
+    req.params.id,
+    { $set: req.body },
+    { new: true, runValidators: true },
+  );
   if (!product) {
     sendError(res, "Produk tidak ditemukan.", 404);
     return;
