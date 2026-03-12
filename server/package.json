@@ -17,7 +17,7 @@
     "testMatch": [
       "**/__tests__/**/*.test.ts"
     ],
-    "setupFilesAfterFramework": [
+    "setupFilesAfterEnv": [
       "./src/__tests__/setup.ts"
     ]
   },
