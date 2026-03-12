@@ -31,7 +31,7 @@ jobs:
         working-directory: server
         run: npm ci
 
-      - name: Run tests
+      - name: Run tests with coverage
         working-directory: server
         env:
           NODE_ENV: test
@@ -45,20 +45,4 @@ jobs:
           CLOUDINARY_API_KEY: dummy
           CLOUDINARY_API_SECRET: dummy
           CLIENT_URL: http://localhost:5173
-        run: npm test
-
-      - name: Check test coverage
-        working-directory: server
-        env:
-          NODE_ENV: test
-          PORT: 5000
-          MONGODB_URI_TEST: mongodb://localhost:27017/ratna-bakery-test
-          JWT_SECRET: test_jwt_secret_for_ci_pipeline_only
-          JWT_EXPIRES_IN: 7d
-          MIDTRANS_SERVER_KEY: dummy
-          MIDTRANS_CLIENT_KEY: dummy
-          CLOUDINARY_CLOUD_NAME: dummy
-          CLOUDINARY_API_KEY: dummy
-          CLOUDINARY_API_SECRET: dummy
-          CLIENT_URL: http://localhost:5173
-        run: npx jest --coverage --forceExit
+        run: npx jest --coverage --forceExit --runInBand
