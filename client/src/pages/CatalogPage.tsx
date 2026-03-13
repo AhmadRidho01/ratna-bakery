@@ -88,8 +88,18 @@ const CatalogPage = () => {
                   >
                     {/* Image */}
                     <Link to={`/catalog/${product.slug}`}>
-                      <div className="h-48 bg-brand-50 flex items-center justify-center text-6xl hover:bg-brand-100 transition-colors cursor-pointer">
-                        {product.category === "roti" ? "🍞" : "🍘"}
+                      <div className="h-48 bg-brand-50 flex items-center justify-center hover:bg-brand-100 transition-colors cursor-pointer overflow-hidden">
+                        {product.images[0] ? (
+                          <img
+                            src={product.images[0]}
+                            alt={product.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-6xl">
+                            {product.category === "roti" ? "🍞" : "🍘"}
+                          </span>
+                        )}
                       </div>
                     </Link>
 
