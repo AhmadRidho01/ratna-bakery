@@ -112,8 +112,18 @@ const CheckoutPage = () => {
                   key={item.product._id}
                   className="flex items-center gap-4 bg-white border border-gray-100 rounded-2xl p-4 shadow-sm"
                 >
-                  <div className="w-16 h-16 bg-brand-50 rounded-xl flex items-center justify-center text-3xl flex-shrink-0">
-                    {item.product.category === "roti" ? "🍞" : "🍘"}
+                  <div className="w-16 h-16 bg-brand-50 rounded-xl flex-shrink-0 overflow-hidden">
+                    {item.product.images[0] ? (
+                      <img
+                        src={item.product.images[0]}
+                        alt={item.product.name}
+                        className="w-full h-full object-cover rounded-xl"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-3xl">
+                        {item.product.category === "roti" ? "🍞" : "🍘"}
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex-1 min-w-0">
