@@ -1,25 +1,19 @@
-// Axios instance terpusat
-
-// --- --- ---
-
 import axios from "axios";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
-  withCredentials: true, // penting untuk cookie-based auth
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Interceptor untuk handle token expired otomatis
+// HAPUS interceptor redirect window.location.href
+// Redirect 401 ditangani oleh ProtectedRoute, bukan di sini
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      // Redirect ke login kalau token expired
-      window.location.href = "/admin/login";
-    }
+    // Cukup reject, biarkan caller yang handle
     return Promise.reject(error);
   },
 );
