@@ -1,8 +1,10 @@
+// App.tsx
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PublicLayout from "./components/layout/PublicLayout";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
 import useAuthStore from "./store/useAuthStore";
+import LoadingSpinner from "./components/ui/LoadingSpinner";
 
 // Public Pages
 import HomePage from "./pages/HomePage";
@@ -20,11 +22,22 @@ import AdminProductsPage from "./pages/admin/AdminProductsPage";
 import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
 
 const App = () => {
-  const { checkAuth } = useAuthStore();
+  const { checkAuth, isLoading } = useAuthStore();
 
   useEffect(() => {
     checkAuth();
   }, []);
+
+  // Tunggu checkAuth selesai dulu sebelum render apapun
+  // Ini mencegah ProtectedRoute redirect ke /admin/login
+  // saat user dan isLoading belum settled
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
 
   return (
     <BrowserRouter>

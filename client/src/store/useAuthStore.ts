@@ -20,7 +20,7 @@ interface AuthStore {
 
 const useAuthStore = create<AuthStore>((set) => ({
   user: null,
-  isLoading: false,
+  isLoading: true, // ✅ true agar App.tsx langsung tampil spinner saat pertama mount
   isAuthenticated: false,
 
   login: async (email, password) => {
@@ -38,7 +38,7 @@ const useAuthStore = create<AuthStore>((set) => ({
       });
     } catch (error) {
       set({ isLoading: false });
-      throw error; // lempar ke komponen yang memanggil
+      throw error;
     }
   },
 
@@ -48,15 +48,19 @@ const useAuthStore = create<AuthStore>((set) => ({
   },
 
   checkAuth: async () => {
-    set({ isLoading: true });
+    // isLoading sudah true dari initial state, tidak perlu set lagi
     try {
       const response = await api.get<{
         success: boolean;
         data: User;
       }>("/auth/me");
-      set({ user: response.data.data, isAuthenticated: true });
+      set({
+        user: response.data.data,
+        isAuthenticated: true,
+        isLoading: false,
+      }); // ✅
     } catch {
-      set({ user: null, isAuthenticated: false });
+      set({ user: null, isAuthenticated: false, isLoading: false }); // ✅
     }
   },
 }));
